@@ -1,13 +1,14 @@
 FROM ubuntu:latest
 RUN apt update && apt upgrade -y
-RUN apt-get install python3 -y
-RUN apt-get install python3-pip -y 
-
 RUN mkdir /app
 
 WORKDIR /app
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 5000
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=5000"]
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
+RUN npm install react-scripts@3.4.1 -g
+
+COPY . ./
+CMD ["npm", "start"]
