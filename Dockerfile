@@ -10,7 +10,7 @@ COPY package.json ./
 COPY package-lock.json ./
 
 RUN apt-get install npm -y
-RUN apt-get install react-scripts --save
+RUN apt-get install react-scripts -y
 
 COPY . ./
 EXPOSE 5000
